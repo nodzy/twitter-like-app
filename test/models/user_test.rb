@@ -39,7 +39,7 @@ test "name should be present" do
  end
  
  test "email validation should reject invalid addresses" do
-     invalid_addresses = %w[user@example,com USER_at_foo.com A_US-ER@foo. first.last@foo_foo.jp foo@alice+bob.com]
+     invalid_addresses = %w[user@example,com USER_at_foo.com A_US-ER@foo. first.last@foo_foo.jp foo@alice+bob.com foo@bar..com]
      invalid_addresses.each do |invalid_address|
        @user.email= invalid_address
  assert_not @user.valid?, "#{invalid_address.inspect} should be invalid"
@@ -53,6 +53,20 @@ duplicate_user.email = @user.email.upcase
  assert_not duplicate_user.valid?
  end
  
+    test "email should be saved as lowercase" do
+mixed_case_email = "Foo@ExaMple.CoM"
+@user.email = mixed_case_email
+@user.save
+ assert_equal mixed_case_email.downcase, @user.reload.email
+ end
+ 
+ 
+ test "password should have a minimum length" do
+@user.password = @user.password_confirmation = "a"*5
+ assert_not @user.valid?
+ end
+ 
+
 
  end
  
