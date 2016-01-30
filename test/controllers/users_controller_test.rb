@@ -74,6 +74,7 @@ test "should not allow the admin attribute to be edited via the web" do
                                            admin: true }
                                            
                                            assert_not @other_user.reload.admin?
+
   end
 
 end
