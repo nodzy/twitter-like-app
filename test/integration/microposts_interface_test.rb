@@ -17,6 +17,7 @@ content = "This micropost really ties the room together"
 assert_difference 'Micropost.count', 1 do
 post microposts_path, micropost: { content: content }
 end
+
 assert_redirected_to root_url
 follow_redirect!
 assert_match content, response.body
